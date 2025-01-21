@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-node@v4.1.0
         with:
           node-version: "22.x"
+          registry-url: https://registry.npmjs.org/
 
       - name: Install dev dependencies
         run: |
@@ -39,6 +40,11 @@ jobs:
         if: github.event_name == 'push'
         id: version_check
         run: |
+          if [ ! -f package.json ]; then
+            echo "package.json does not exist => skipping."
+            echo "version_updated=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           echo "Checking for changes in guac-dist/package.json..."
           if git diff HEAD~1 HEAD -- guac-dist/package.json | grep -q .; then
             echo "Package version updated."
