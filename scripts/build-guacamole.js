@@ -157,7 +157,7 @@ function createPackageJson(latestVersion) {
   // We store final package config in guac-dist/package.json
   // with version set to the latest Guacamole version
   const pkg = {
-    name: "guacamole-common-js",
+    name: "@philipab/guacamole-common-js",
     version: latestVersion,
     description:
       "Guacamole Common JS (ESM-bundled from Maven, with named + default exports)",
