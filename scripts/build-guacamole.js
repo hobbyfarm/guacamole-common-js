@@ -165,7 +165,21 @@ function createPackageJson(latestVersion) {
     type: "module",
     main: "./dist/index.js",
     // Only publish dist + package.json
-    files: ["dist", "package.json"],
+    files: ["dist", "package.json", "README.md"],
+    author:
+      "https://github.com/PhilipAB/guacamole-common-js/graphs/contributors",
+    bugs: {
+      url: "https://github.com/PhilipAB/guacamole-common-js/issues",
+    },
+    homepage: "https://github.com/PhilipAB/guacamole-common-js",
+    repository: {
+      type: "git",
+      url: "https://github.com/PhilipAB/guacamole-common-js.git",
+    },
+    keywords: ["guacamole", "guacamole-common-js"],
+    publishConfig: {
+      access: "public",
+    },
   };
 
   const pkgPath = path.join(GUAC_DIST_DIR, "package.json");
