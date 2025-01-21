@@ -4,6 +4,10 @@ on:
   # Once a month, on the 1st at 00:00 UTC
   schedule:
     - cron: "0 0 1 * *"
+  # Also run on push to main
+  push:
+    branches:
+      - main
 
 jobs:
   release:
