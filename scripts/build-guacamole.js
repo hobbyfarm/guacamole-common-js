@@ -147,7 +147,7 @@ async function bundleToEsm(allJsPath, discoveredTypes) {
       js: `${namedExports}export default Guacamole;`,
     },
     sourcemap: false,
-    minify: true,
+    minify: false,
   });
 
   console.log(`esbuild: created ESM at ${path.join(DIST_DIR, "index.js")}`);
@@ -157,7 +157,7 @@ function createPackageJson(latestVersion) {
   // We store final package config in guac-dist/package.json
   // with version set to the latest Guacamole version
   const pkg = {
-    name: "@philipab/guacamole-common-js",
+    name: "@philipab/guacamole-common",
     version: latestVersion,
     description:
       "Guacamole Common JS (ESM-bundled from Maven, with named + default exports)",

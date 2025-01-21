@@ -42,6 +42,7 @@ npm run build-guacamole
 ```
 
 ## Usage
+This package is compatible with [@types/guacamole-common-js](https://www.npmjs.com/package/@types/guacamole-common-js). You can import this package in TypeScript the following way:
 ```ts
 // Named imports (if you only need specific functionality):
 import { Keyboard, Tunnel } from 'guacamole-common-js';

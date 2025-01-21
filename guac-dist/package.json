@@ -1,5 +1,5 @@
 {
-  "name": "@philipab/guacamole-common-js",
+  "name": "@philipab/guacamole-common",
   "version": "1.5.5",
   "description": "Guacamole Common JS (ESM-bundled from Maven, with named + default exports)",
   "license": "Apache-2.0",
