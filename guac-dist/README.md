@@ -42,6 +42,13 @@ npm run build-guacamole
 ```
 
 ## Usage
+To reference this package in your project as `guacamole-common-js` you can include it in your package.json the following way:
+```json
+  "dependencies": {
+    "guacamole-common-js": "npm:@philipab/guacamole-common@^1.5.5"
+  },
+```
+
 This package is compatible with [@types/guacamole-common-js](https://www.npmjs.com/package/@types/guacamole-common-js). You can import this package in TypeScript the following way:
 ```ts
 // Named imports (if you only need specific functionality):
