@@ -33,18 +33,17 @@ jobs:
           cd scripts
           npm run check-latest
 
-      # On push events, let's check whether the published package version has changed.
       - name: Check if Package Version Updated
         if: github.event_name == 'push'
         id: version_check
         run: |
-          # Check if guac-dist/package.json is in the diff of the last commit.
-          if git diff --name-only HEAD^ HEAD | grep -q "guac-dist/package.json"; then
+          echo "Checking for changes in guac-dist/package.json..."
+          if git diff HEAD~1 HEAD -- guac-dist/package.json | grep -q .; then
             echo "Package version updated."
-            echo "::set-output name=version_updated::true"
+            echo "version_updated=true" >> $GITHUB_OUTPUT
           else
             echo "No version update detected."
-            echo "::set-output name=version_updated::false"
+            echo "version_updated=false" >> $GITHUB_OUTPUT
           fi
 
       # Build and publish only if the package version was updated.
