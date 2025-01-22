@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build-guacamole": "node build-guacamole.js",
-    "check-latest": "node check-latest.js"
+    "check-latest": "node check-latest.js",
+    "test": "node tests/test-exports.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.24.2",
