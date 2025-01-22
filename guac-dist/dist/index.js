@@ -5080,6 +5080,7 @@ Guacamole.VideoPlayer.getInstance = function getInstance3(stream, layer, mimetyp
 };
 export const ArrayBufferReader  = Guacamole.ArrayBufferReader ;
 export const ArrayBufferWriter  = Guacamole.ArrayBufferWriter ;
+export const AudioContextFactory  = Guacamole.AudioContextFactory ;
 export const AudioPlayer  = Guacamole.AudioPlayer ;
 export const RawAudioPlayer  = Guacamole.RawAudioPlayer ;
 export const AudioRecorder  = Guacamole.AudioRecorder ;
@@ -5114,5 +5115,6 @@ export const WebSocketTunnel  = Guacamole.WebSocketTunnel ;
 export const ChainedTunnel  = Guacamole.ChainedTunnel ;
 export const StaticHTTPTunnel  = Guacamole.StaticHTTPTunnel ;
 export const UTF8Parser  = Guacamole.UTF8Parser ;
+export const API_VERSION  = Guacamole.API_VERSION ;
 export const VideoPlayer  = Guacamole.VideoPlayer ;
 export default Guacamole;

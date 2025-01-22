@@ -99,9 +99,11 @@ async function unzipFile(zipFilePath, targetDir) {
 function findGuacamoleTypes(allJsPath) {
   const codeLines = fs.readFileSync(allJsPath, "utf8").split("\n");
 
-  const GUAC_DEF_REGEX = /^var\s+Guacamole\s*=\s*Guacamole\s*\|\|\s*{};?$/;
-  const GUAC_ASSIGN_REGEX =
-    /^Guacamole\.([^.]+)\s*=\s*function(?:\s+[A-Za-z0-9_$]+)?\s*\(/;
+  // Matches: "var Guacamole = Guacamole || {};" (with optional extra spaces and optional trailing semicolon)
+  const GUAC_DEF_REGEX = /^var\s+Guacamole\s*=\s*Guacamole\s*\|\|\s*{}\s*;?$/;
+
+  // Matches a line that starts with "Guacamole.<propertyName> =" (property name can be any sequence of characters except a period)
+  const GUAC_ASSIGN_REGEX = /^Guacamole\.([^.]+)\s*=\s*/;
 
   let active = false;
   const types = new Set();
