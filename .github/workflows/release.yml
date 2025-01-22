@@ -61,6 +61,12 @@ jobs:
           cd scripts
           npm run build-guacamole
 
+      - name: Test the Exports
+        if: github.event_name == 'push' && steps.version_check.outputs.version_updated == 'true'
+        run: |
+          cd scripts
+          npm run test
+
       - name: Publish to npm
         if: github.event_name == 'push' && steps.version_check.outputs.version_updated == 'true'
         run: |
