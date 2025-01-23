@@ -13,7 +13,6 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const unzipper = require("unzipper");
-const { parseStringPromise } = require("xml2js");
 const { build } = require("esbuild");
 
 // Where final library goes:
@@ -22,37 +21,7 @@ const DIST_DIR = path.join(GUAC_DIST_DIR, "dist");
 // Temp folder for unzipping:
 const TMP_DIR = path.join(GUAC_DIST_DIR, ".tmp-guac");
 
-// Maven metadata:
-const MAVEN_METADATA_URL =
-  "https://repo1.maven.org/maven2/org/apache/guacamole/guacamole-common-js/maven-metadata.xml";
-
-async function getLatestVersion() {
-  console.log("Fetching Maven metadata from:", MAVEN_METADATA_URL);
-  return new Promise((resolve, reject) => {
-    https
-      .get(MAVEN_METADATA_URL, (res) => {
-        if (res.statusCode !== 200) {
-          return reject(
-            new Error(
-              `Failed to fetch Maven metadata (status: ${res.statusCode})`
-            )
-          );
-        }
-        let data = "";
-        res.on("data", (chunk) => (data += chunk));
-        res.on("end", async () => {
-          try {
-            const parsed = await parseStringPromise(data);
-            const latest = parsed.metadata.versioning[0].latest[0];
-            resolve(latest);
-          } catch (err) {
-            reject(err);
-          }
-        });
-      })
-      .on("error", reject);
-  });
-}
+const VERSION = "1.5.5"; // managed by renovate bot
 
 async function downloadZip(version) {
   const zipUrl = `https://repo1.maven.org/maven2/org/apache/guacamole/guacamole-common-js/${version}/guacamole-common-js-${version}.zip`;
@@ -155,12 +124,12 @@ async function bundleToEsm(allJsPath, discoveredTypes) {
   console.log(`esbuild: created ESM at ${path.join(DIST_DIR, "index.js")}`);
 }
 
-function createPackageJson(latestVersion) {
+function createPackageJson(version) {
   // We store final package config in guac-dist/package.json
   // with version set to the latest Guacamole version
   const pkg = {
     name: "@philipab/guacamole-common",
-    version: latestVersion,
+    version: version,
     description:
       "Guacamole Common JS (ESM-bundled from Maven, with named + default exports)",
     license: "Apache-2.0",
@@ -202,15 +171,14 @@ function copyReadme() {
 
 async function main() {
   try {
-    const latestVersion = await getLatestVersion();
-    console.log("Latest Guacamole version:", latestVersion);
+    console.log("Latest Guacamole version:", VERSION);
 
     if (!fs.existsSync(GUAC_DIST_DIR)) {
       fs.mkdirSync(GUAC_DIST_DIR, { recursive: true });
     }
 
     // 1) Download ZIP
-    const zipPath = await downloadZip(latestVersion);
+    const zipPath = await downloadZip(VERSION);
 
     // 2) Unzip to TMP_DIR
     if (fs.existsSync(TMP_DIR)) {
@@ -240,7 +208,7 @@ async function main() {
     await bundleToEsm(allJsPath, types);
 
     // 7) create package.json in guac-dist
-    createPackageJson(latestVersion);
+    createPackageJson(VERSION);
 
     // 8) copy readme from root directory into guac-dist
     copyReadme();
@@ -250,7 +218,7 @@ async function main() {
 
     console.log(
       '\nDone! "guac-dist" now contains dist/ + package.json (version:',
-      latestVersion,
+      VERSION,
       ")"
     );
     console.log("You can publish with:");
