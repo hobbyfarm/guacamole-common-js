@@ -18,6 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
 
+      - name: Validate Renovate JSON
+        run: jq type .github/renovate.json
+
       - name: Renovate Bot GitHub Action
         env:
           LOG_LEVEL: debug
