@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4.2.2
 
       - name: Validate Renovate JSON
-        run: jq type .github/renovate.json
+        run: jq type renovate.json
 
       - name: Renovate Bot GitHub Action
         env:
