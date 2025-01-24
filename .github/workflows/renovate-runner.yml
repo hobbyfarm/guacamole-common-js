@@ -36,7 +36,7 @@ jobs:
           RENOVATE_GIT_AUTHOR: "philipab-test <123456789+philipab-test[bot]@users.noreply.github.com>"
           # Use GitHub API to create commits (this allows for signed commits from GitHub App)
           RENOVATE_PLATFORM_COMMIT: "true"
-        uses: renovatebot/github-action@v36.0.0
+        uses: renovatebot/github-action@v41.0.10
         with:
           configurationFile: 'renovate.json'
           token: ${{ steps.app-token.outputs.token }}
