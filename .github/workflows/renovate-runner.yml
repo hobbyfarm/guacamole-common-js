@@ -10,9 +10,6 @@ on:
 jobs:
   renovate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # allow commiting on branches of created pull requests
-      pull-requests: write # allow opening pull requests
 
     steps:
       - name: Checkout
