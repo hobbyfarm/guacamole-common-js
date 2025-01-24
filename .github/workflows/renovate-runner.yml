@@ -18,11 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
 
-      - name: Use Node
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version: "22.x"
-
       - name: Renovate Bot GitHub Action
         env:
           LOG_LEVEL: debug
