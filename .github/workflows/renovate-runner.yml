@@ -29,3 +29,4 @@ jobs:
           configurationFile: 'renovate.json'
           token: ${{ secrets.RENOVATE_TOKEN }}
           useSlim: true
+          extraArgs: '--log-level=debug'
