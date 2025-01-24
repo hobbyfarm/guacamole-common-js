@@ -1,0 +1,34 @@
+name: "Run build and tests"
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Use Node
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: "22.x"
+
+      - name: Install dev dependencies
+        run: |
+          cd scripts
+          npm ci
+
+      - name: Build the Package
+        run: |
+          cd scripts
+          npm run build-guacamole
+
+      - name: Test the Exports
+        run: |
+          cd scripts
+          npm run test

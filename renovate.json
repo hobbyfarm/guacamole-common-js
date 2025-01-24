@@ -1,0 +1,20 @@
+{
+    "extends": ["config:base"],
+    "customManagers": [
+      {
+        "fileMatch": ["^scripts/build-guacamole\\.js$"],
+        "matchStrings": ["const VERSION = \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\";"],
+        "datasourceTemplate": "maven",
+        "depNameTemplate": "org.apache.guacamole:guacamole-common-js",
+        "extractVersionTemplate": "{{newVersion}}",
+        "versioningTemplate": "semver"
+      }
+    ],
+    "packageRules": [
+      {
+        "matchDepTypes": ["dependencies"],
+        "enabled": false
+      }
+    ]
+  }
+  

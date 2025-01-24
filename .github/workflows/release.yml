@@ -1,54 +1,46 @@
-name: "Auto Release Guacamole"
+name: "Release Guacamole"
 
 on:
-  # Once a month, on the 1st at 00:00 UTC
-  schedule:
-    - cron: "0 0 1 * *"
-  # Also run on push to main
   push:
     branches:
       - main
 
 jobs:
   release:
-    permissions:
-      contents: write
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
+        if: steps.version_check.outputs.version_updated == 'true'
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 2
 
-      - name: Use Node
+      - name: Use node
+        if: steps.version_check.outputs.version_updated == 'true'
         uses: actions/setup-node@v4.1.0
         with:
           node-version: "22.x"
           registry-url: https://registry.npmjs.org/
-
-      - name: Install dev dependencies
-        run: |
-          cd scripts
-          npm ci
-
-      - name: Check for new version
-        if: github.event_name == 'schedule'
-        run: |
-          cd scripts
-          npm run check-latest
-
-      - name: Check if Package Version Updated
-        if: github.event_name == 'push'
+      - name: Check if version updated
         id: version_check
         run: |
-          if [ ! -f guac-dist/package.json ]; then
-            echo "package.json does not exist => skipping."
+          if [ ! -f scripts/build-guacamole.js ]; then
+            echo "scripts/build-guacamole.js does not exist => skipping."
             echo "version_updated=false" >> $GITHUB_OUTPUT
             exit 0
           fi
-          echo "Checking for changes in guac-dist/package.json..."
-          if git diff HEAD~1 HEAD -- guac-dist/package.json | grep -q .; then
+
+          echo "Checking for changes in the VERSION line of scripts/build-guacamole.js..."
+
+          prev_version=$(git show HEAD~1:scripts/build-guacamole.js | grep 'const VERSION =' | awk -F'= ' '{print $2}' | tr -d ';')
+
+          current_version=$(grep 'const VERSION =' scripts/build-guacamole.js | awk -F'= ' '{print $2}' | tr -d ';')
+
+          echo "Previous version: $prev_version"
+          echo "Current version: $current_version"
+
+          if [ "$prev_version" != "$current_version" ]; then
             echo "Package version updated."
             echo "version_updated=true" >> $GITHUB_OUTPUT
           else
@@ -56,21 +48,26 @@ jobs:
             echo "version_updated=false" >> $GITHUB_OUTPUT
           fi
 
-      # Build and publish only if the package version was updated.
-      - name: Build the Package
-        if: github.event_name == 'push' && steps.version_check.outputs.version_updated == 'true'
+      - name: Install dev dependencies
+        if: steps.version_check.outputs.version_updated == 'true'
+        run: |
+          cd scripts
+          npm ci
+
+      - name: Build the package
+        if: steps.version_check.outputs.version_updated == 'true'
         run: |
           cd scripts
           npm run build-guacamole
 
-      - name: Test the Exports
-        if: github.event_name == 'push' && steps.version_check.outputs.version_updated == 'true'
+      - name: Test the exports
+        if: steps.version_check.outputs.version_updated == 'true'
         run: |
           cd scripts
           npm run test
 
       - name: Publish to npm
-        if: github.event_name == 'push' && steps.version_check.outputs.version_updated == 'true'
+        if: steps.version_check.outputs.version_updated == 'true'
         run: |
           cd guac-dist
           npm publish

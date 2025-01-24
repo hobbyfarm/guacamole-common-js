@@ -1,0 +1,31 @@
+name: "Run Renovate"
+
+on:
+  # Once a month, on the 1st at 00:00 UTC
+  schedule:
+    - cron: "0 0 1 * *"
+  # Optionally, trigger manually...
+  workflow_dispatch:
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # allow commiting on branches of created pull requests
+      pull-requests: write # allow opening pull requests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Use Node
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: "22.x"
+
+      - name: Renovate Bot GitHub Action
+        uses: renovatebot/github-action@v36.0.0
+        with:
+          configurationFile: 'renovate.json'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          useSlim: true
