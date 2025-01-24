@@ -1,6 +1,6 @@
 # guacamole-common-js
 
-This repository tracks the official [guacamole-common-js](https://mvnrepository.com/artifact/org.apache.guacamole/guacamole-common-js) release on Maven and periodically builds a tree-shakable ECMAScript module from it.
+This repository tracks the official [guacamole-common-js](https://mvnrepository.com/artifact/org.apache.guacamole/guacamole-common-js) release on Maven and periodically builds a tree-shakable ECMAScript module from it. The tracking works semi-automatically with renovate bot.
 
 ## Overview
 
@@ -8,28 +8,34 @@ The goal of this project is to fetch the latest release of the Apache Guacamole 
 
 The project is split into two main parts:
 
-- **Build Scripts**: Located in the `scripts/` directory. These scripts are responsible for downloading, unzipping, transforming, and rebuilding the Guacamole source code.
-- **Published Package**: The final npm package is assembled in the `guac-dist/` folder, containing:
-  - A `dist/` directory with the built ES module (`index.js`)
-  - A `package.json` file configured for ES modules
+- **Build Scripts**: Located in the `scripts/` directory. These scripts are responsible for downloading, unzipping, transforming, testing and rebuilding the Guacamole source code.
+- **GitHub Workflows**: Located in the `.github/workflows` directory. This folder contains the following 3 jobs:
+  - `renovate-runner.yml`: The job to run our renovate bot (once per month)
+  - `build.yml`: The build job to build and test our bundled esm module on PRs
+  - `release.yml`: A job which triggers a new release if changes were made to the **VERSION** const of our `build-guacamole.js`
 
 ## Repository Structure
 ```
 my-guac-repo/
 ├─ .github/
 │   └─ workflows/
-│       └─ release.yml   # GitHub Actions workflow
+│       ├─ build.yml
+│       ├─ release.yml
+│       └─ renovate-runner.yml
 │
-├─ guac-dist/
+├─ guac-dist/                 # not contained in this repo, but created if build-guacamole.js is run
 │   ├─ dist/
-│   │   └─ index.js      # Final ESM build
-│   ├─ README.md         # npm Readme (copied from main repo)
-│   └─ package.json      # npm package metadata
+│   │   └─ index.js           # final ESM build
+│   ├─ README.md              # npm Readme (copied from main repo)
+│   └─ package.json           # npm package metadata
 │
 ├─ scripts/
-│   ├─ package.json      # Dev depedendencies
-│   ├─ build-guacamole.js
-│   └─ check-latest.js
+│   ├─ node_modules/          # compiled dev dependencies
+│   ├─ tests/
+│   │   └─ test-exports.mjs   # file to test our npm package exports
+│   ├─ build-guacamole.js     # file to build our npm package
+│   ├─ package-lock.json
+│   └─ package.json           # dev dependencies metadata
 │
 ├─ README.md             # Main repo Readme
 └─ LICENSE               # Apache 2.0 License
@@ -40,6 +46,10 @@ my-guac-repo/
 cd scripts
 npm run build-guacamole
 ```
+
+- **Published Package**: The final npm package is assembled in the `guac-dist/` folder, containing:
+  - A `dist/` directory with the built ES module (`index.js`)
+  - A `package.json` file configured for ES modules
 
 ## Usage
 To reference this package in your project as `guacamole-common-js` you can include it in your package.json the following way:
