@@ -37,8 +37,9 @@ my-guac-repo/
 │   ├─ package-lock.json
 │   └─ package.json           # dev dependencies metadata
 │
-├─ README.md             # Main repo Readme
-└─ LICENSE               # Apache 2.0 License
+├─ LICENSE                    # Apache 2.0 License
+├─ README.md                  # Main repo Readme
+└─ renovate.json              # config for renovate bot
 ```
 
 ## Building the package
