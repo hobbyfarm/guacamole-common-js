@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  # Optionally, trigger manually...
+  workflow_dispatch:
 
 jobs:
   release:
