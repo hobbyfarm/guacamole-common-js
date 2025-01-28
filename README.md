@@ -56,7 +56,7 @@ npm run build-guacamole
 To reference this package in your project as `guacamole-common-js` you can include it in your package.json the following way:
 ```json
   "dependencies": {
-    "guacamole-common-js": "npm:@philipab/guacamole-common@^1.5.5"
+    "guacamole-common-js": "npm:@hobbyfarm-org/guacamole-common@^1.5.5"
   },
 ```
 
