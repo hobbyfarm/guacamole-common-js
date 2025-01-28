@@ -135,7 +135,7 @@ function createPackageJson(version) {
     license: "Apache-2.0",
     type: "module",
     main: "./dist/index.js",
-    // Only publish dist + package.json
+    // Only publish dist + package.json + README.md
     files: ["dist", "package.json", "README.md"],
     author:
       "https://github.com/hobbyfarm/guacamole-common-js/graphs/contributors",
