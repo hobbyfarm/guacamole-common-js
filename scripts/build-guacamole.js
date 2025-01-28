@@ -128,7 +128,7 @@ function createPackageJson(version) {
   // We store final package config in guac-dist/package.json
   // with version set to the latest Guacamole version
   const pkg = {
-    name: "@philipab/guacamole-common",
+    name: "@hobbyfarm-org/guacamole-common-js",
     version: version,
     description:
       "Guacamole Common JS (ESM-bundled from Maven, with named + default exports)",
@@ -138,14 +138,14 @@ function createPackageJson(version) {
     // Only publish dist + package.json
     files: ["dist", "package.json", "README.md"],
     author:
-      "https://github.com/PhilipAB/guacamole-common-js/graphs/contributors",
+      "https://github.com/hobbyfarm/guacamole-common-js/graphs/contributors",
     bugs: {
-      url: "https://github.com/PhilipAB/guacamole-common-js/issues",
+      url: "https://github.com/hobbyfarm/guacamole-common-js/issues",
     },
-    homepage: "https://github.com/PhilipAB/guacamole-common-js",
+    homepage: "https://github.com/hobbyfarm/guacamole-common-js",
     repository: {
       type: "git",
-      url: "https://github.com/PhilipAB/guacamole-common-js.git",
+      url: "https://github.com/hobbyfarm/guacamole-common-js.git",
     },
     keywords: ["guacamole", "guacamole-common-js"],
     publishConfig: {
