@@ -6,7 +6,7 @@
     "test": "node tests/test-exports.mjs"
   },
   "devDependencies": {
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "unzipper": "^0.12.3"
   }
 }
