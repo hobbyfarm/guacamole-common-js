@@ -13,17 +13,10 @@ jobs:
 
     steps:
       - name: Checkout
-        if: steps.version_check.outputs.version_updated == 'true'
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 2
 
-      - name: Use node
-        if: steps.version_check.outputs.version_updated == 'true'
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version: "22.x"
-          registry-url: https://registry.npmjs.org/
       - name: Check if version updated
         id: version_check
         run: |
@@ -49,6 +42,13 @@ jobs:
             echo "No version update detected."
             echo "version_updated=false" >> $GITHUB_OUTPUT
           fi
+
+      - name: Use node
+        if: steps.version_check.outputs.version_updated == 'true'
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version: "22.x"
+          registry-url: https://registry.npmjs.org/
 
       - name: Install dev dependencies
         if: steps.version_check.outputs.version_updated == 'true'
