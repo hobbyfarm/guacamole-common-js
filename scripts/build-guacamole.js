@@ -21,7 +21,7 @@ const DIST_DIR = path.join(GUAC_DIST_DIR, "dist");
 // Temp folder for unzipping:
 const TMP_DIR = path.join(GUAC_DIST_DIR, ".tmp-guac");
 
-const VERSION = "1.5.5"; // managed by renovate bot
+const VERSION = "1.6.0"; // managed by renovate bot
 
 async function downloadZip(version) {
   const zipUrl = `https://repo1.maven.org/maven2/org/apache/guacamole/guacamole-common-js/${version}/guacamole-common-js-${version}.zip`;
