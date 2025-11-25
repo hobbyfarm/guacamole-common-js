@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
 
       - name: Validate Renovate JSON
         run: jq type renovate.json
 
-      - uses: actions/create-github-app-token@v1.11.6
+      - uses: actions/create-github-app-token@v2.0.2
         id: app-token
         with:
           app-id: ${{ secrets.APP_ID }}
@@ -36,7 +36,7 @@ jobs:
           RENOVATE_GIT_AUTHOR: "hobbyfarm-renovate <123456789+hobbyfarm-renovate[bot]@users.noreply.github.com>"
           # Use GitHub API to create commits (this allows for signed commits from GitHub App)
           RENOVATE_PLATFORM_COMMIT: "true"
-        uses: renovatebot/github-action@v41.0.14
+        uses: renovatebot/github-action@v43.0.2
         with:
           configurationFile: 'renovate.json'
           token: ${{ steps.app-token.outputs.token }}
