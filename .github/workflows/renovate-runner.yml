@@ -36,7 +36,7 @@ jobs:
           RENOVATE_GIT_AUTHOR: "hobbyfarm-renovate <123456789+hobbyfarm-renovate[bot]@users.noreply.github.com>"
           # Use GitHub API to create commits (this allows for signed commits from GitHub App)
           RENOVATE_PLATFORM_COMMIT: "true"
-        uses: renovatebot/github-action@v43.0.2
+        uses: renovatebot/github-action@v43.0.20
         with:
           configurationFile: 'renovate.json'
           token: ${{ steps.app-token.outputs.token }}
